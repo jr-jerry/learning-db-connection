@@ -11,6 +11,8 @@ import lombok.ToString;
 @Setter
 @ToString 
 @Builder 
+@NoArgsConstructor
+@AllArgsConstructor  
 public class UserReqDTO {
     private String userName;
     private Long userAge;

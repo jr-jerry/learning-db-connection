@@ -6,8 +6,7 @@ import com.Ducat.learning_db_connection.Entity.UserEntity;
 import com.Ducat.learning_db_connection.Repository.UserRepo;
 
 import java.util.List;
-
-import org.apache.catalina.User;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,6 +34,25 @@ public class UserServiceImp implements  UserService {
                 .userAge(savedUserEntity.getUserAge())
                 .userName(savedUserEntity.getUserName())
                 .build();
+    }
+
+    @Override
+    public UserEntity updateUser(UserReqDTO userReqDTO) {
+        String oldUsername=userReqDTO.getUserName();
+        Long newAge=userReqDTO.getUserAge();
+
+        Optional<UserEntity> boxOptional=userRepo.findByUserName(oldUsername);
+
+        if(boxOptional.isEmpty()){
+            return null;
+        }
+        UserEntity oldEntity=boxOptional.get();
+
+        oldEntity.setUserAge(newAge);
+        oldEntity.setUserName(oldUsername);
+        
+        UserEntity updatedEntity=userRepo.save(oldEntity);
+        return updatedEntity;       
     }
 
     public List<UserEntity> getAllUser(){

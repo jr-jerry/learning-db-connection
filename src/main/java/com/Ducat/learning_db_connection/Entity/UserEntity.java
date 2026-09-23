@@ -20,6 +20,7 @@ public class UserEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long userId;
+    
     @Column (
         unique = true,name = "user_name"
     )

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,16 +23,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
+        
+    @PutMapping("/update")
+    public ResponseEntity<?> updateEndpoint(@RequestBody UserReqDTO userReqDTO){
+       UserEntity updatedUserEntity= userService.updateUser(userReqDTO);
 
-    private final UserService userService;
+       return ResponseEntity.accepted().body(updatedUserEntity);
+    }
+
     @PostMapping("/signUp")
     public ResponseEntity<?> signUpEndpoint(@RequestBody UserReqDTO userReqDTO){
         System.out.println("Data Receive in controller layer "+userReqDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserEntity(userReqDTO));
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<UserResDTO>> getMethodName() {
         List<UserEntity> savedUserList= userService.getAllUser();
