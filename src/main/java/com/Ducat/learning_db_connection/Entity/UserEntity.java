@@ -26,4 +26,6 @@ public class UserEntity {
     )
     private String userName;
     private Long userAge;
+
+    private Boolean isDeleted;
 }

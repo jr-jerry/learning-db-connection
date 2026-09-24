@@ -10,8 +10,9 @@ public interface UserService {
 
     UserResDTO saveUserEntity(UserReqDTO userReqDTO);
 
-    List<UserEntity> getAllUser();
+    List<UserResDTO> getAllUser();
 
     UserEntity updateUser(UserReqDTO userReqDTO);
 
+    void deleteUser(Long userId);
 }

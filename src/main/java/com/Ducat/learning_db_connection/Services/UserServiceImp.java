@@ -5,6 +5,7 @@ import com.Ducat.learning_db_connection.DTO.UserResDTO;
 import com.Ducat.learning_db_connection.Entity.UserEntity;
 import com.Ducat.learning_db_connection.Repository.UserRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -16,17 +17,26 @@ public class UserServiceImp implements  UserService {
     public UserServiceImp(UserRepo userRepo){
         this.userRepo=userRepo;
     }
-
+    @Override 
+    public void deleteUser(Long userId){
+        Optional<UserEntity> boxOptional=userRepo.findById(userId);
+        if(boxOptional.isEmpty()){
+            //exception should be throw here 
+        }
+        UserEntity oldEntity=boxOptional.get();
+        oldEntity.setIsDeleted(true);
+ 
+        userRepo.save(oldEntity); 
+    }
     @Override
     public UserResDTO saveUserEntity(UserReqDTO userReqDTO) {
+
         UserEntity userEntity=new UserEntity();
+
         userEntity.setUserAge(userReqDTO.getUserAge());
         userEntity.setUserName(userReqDTO.getUserName());
-     //business logic implement
-        // UserEntity userEntity=UserEntity.builder()
-        //         .userAge(userReqDTO.getUserAge())
-        //         .userName(userReqDTO.getUserName())
-        //         .build();
+        userEntity.setIsDeleted(false);
+     
 
        UserEntity savedUserEntity= userRepo.save(userEntity);
 
@@ -55,7 +65,19 @@ public class UserServiceImp implements  UserService {
         return updatedEntity;       
     }
 
-    public List<UserEntity> getAllUser(){
-       return userRepo.findAll();
+    public List<UserResDTO> getAllUser(){
+        List<UserResDTO> emptyDtoList=new ArrayList<>();
+        List<UserEntity> savedUserList=userRepo.findAll();
+
+        for(UserEntity user:savedUserList){
+            if(user.getIsDeleted()==false){
+                 UserResDTO userResDTO=UserResDTO.builder()
+                                            .userName(user.getUserName())
+                                            .userAge(user.getUserAge())
+                                            .build();
+                emptyDtoList.add(userResDTO);
+            }
+        }
+        return emptyDtoList;
     }
 }

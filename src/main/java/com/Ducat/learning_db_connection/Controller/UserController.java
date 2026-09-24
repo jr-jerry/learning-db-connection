@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +29,12 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-        
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<?> deleteEndpoint(@RequestParam  Long userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
     @PutMapping("/update")
     public ResponseEntity<?> updateEndpoint(@RequestBody UserReqDTO userReqDTO){
        UserEntity updatedUserEntity= userService.updateUser(userReqDTO);
@@ -44,17 +50,8 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserResDTO>> getMethodName() {
-        List<UserEntity> savedUserList= userService.getAllUser();
-        List<UserResDTO> emptyDtoList=new ArrayList<>();
-
-        for(UserEntity user:savedUserList){
-            UserResDTO userResDTO=UserResDTO.builder()
-                                            .userName(user.getUserName())
-                                            .userAge(user.getUserAge())
-                                            .isSoftDeleted(false)
-                                            .build();
-            emptyDtoList.add(userResDTO);
-        }
+        List<UserResDTO> emptyDtoList= userService.getAllUser();
+        
         return ResponseEntity.ok(emptyDtoList);
     }
 }

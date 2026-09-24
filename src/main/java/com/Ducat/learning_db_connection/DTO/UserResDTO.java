@@ -10,5 +10,4 @@ import lombok.Setter;
 public class UserResDTO {
     private String userName;
     private Long userAge;
-    private Boolean isSoftDeleted;
 }
