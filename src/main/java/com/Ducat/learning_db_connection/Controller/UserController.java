@@ -3,22 +3,18 @@ package com.Ducat.learning_db_connection.Controller;
 import com.Ducat.learning_db_connection.DTO.UserReqDTO;
 import com.Ducat.learning_db_connection.DTO.UserResDTO;
 import com.Ducat.learning_db_connection.Entity.UserEntity;
+import com.Ducat.learning_db_connection.Exception.InValidAgeException;
 import com.Ducat.learning_db_connection.Services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -30,20 +26,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ExceptionHandler(value=InValidAgeException.class)
+    public ResponseEntity<?> handleInvalidAgeException(InValidAgeException e){
+        ResponseEntity<Map<String,String>> response=new ResponseEntity<>(Map.of("message","invalid age"),HttpStatus.BAD_REQUEST);
+        return response;
+    }
     @DeleteMapping("/remove")
     public ResponseEntity<?> deleteEndpoint(@RequestParam  Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @PutMapping("/update")
-    public ResponseEntity<?> updateEndpoint(@RequestBody UserReqDTO userReqDTO){
+    public ResponseEntity<?> updateEndpoint(@Valid @RequestBody UserReqDTO userReqDTO){
        UserEntity updatedUserEntity= userService.updateUser(userReqDTO);
 
        return ResponseEntity.accepted().body(updatedUserEntity);
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUpEndpoint(@RequestBody UserReqDTO userReqDTO){
+    public ResponseEntity<?> signUpEndpoint(@Valid  @RequestBody  UserReqDTO userReqDTO){
         System.out.println("Data Receive in controller layer "+userReqDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserEntity(userReqDTO));
     }

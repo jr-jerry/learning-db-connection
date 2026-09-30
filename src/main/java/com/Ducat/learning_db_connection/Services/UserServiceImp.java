@@ -3,6 +3,7 @@ package com.Ducat.learning_db_connection.Services;
 import com.Ducat.learning_db_connection.DTO.UserReqDTO;
 import com.Ducat.learning_db_connection.DTO.UserResDTO;
 import com.Ducat.learning_db_connection.Entity.UserEntity;
+import com.Ducat.learning_db_connection.Exception.InValidAgeException;
 import com.Ducat.learning_db_connection.Repository.UserRepo;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class UserServiceImp implements  UserService {
     public void deleteUser(Long userId){
         Optional<UserEntity> boxOptional=userRepo.findById(userId);
         if(boxOptional.isEmpty()){
-            //exception should be throw here 
+
         }
         UserEntity oldEntity=boxOptional.get();
         oldEntity.setIsDeleted(true);
@@ -32,8 +33,10 @@ public class UserServiceImp implements  UserService {
     public UserResDTO saveUserEntity(UserReqDTO userReqDTO) {
 
         UserEntity userEntity=new UserEntity();
-
-        userEntity.setUserAge(userReqDTO.getUserAge());
+        if(userReqDTO.getUserAge()<0){
+            throw new InValidAgeException("invalid age hai ");
+        }
+        userEntity.setUserAge( userReqDTO.getUserAge());
         userEntity.setUserName(userReqDTO.getUserName());
         userEntity.setIsDeleted(false);
      
@@ -49,7 +52,7 @@ public class UserServiceImp implements  UserService {
     @Override
     public UserEntity updateUser(UserReqDTO userReqDTO) {
         String oldUsername=userReqDTO.getUserName();
-        Long newAge=userReqDTO.getUserAge();
+        Long newAge= userReqDTO.getUserAge();
 
         Optional<UserEntity> boxOptional=userRepo.findByUserName(oldUsername);
 

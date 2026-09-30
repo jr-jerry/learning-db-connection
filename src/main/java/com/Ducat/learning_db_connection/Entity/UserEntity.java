@@ -27,5 +27,14 @@ public class UserEntity {
     private String userName;
     private Long userAge;
 
+    private String add;
     private Boolean isDeleted;
+
 }
+// select * from table where userAge=? AND isDeleted=false;
+// findById(id) ;
+//findByUserName(name);
+//findByUserAge(age);
+//findByUserAgeAndUserName(age,name);
+// isDeleted false , userAge>20
+// findByUserAgeGreaterThanAndIsDeletedFalse(age);
