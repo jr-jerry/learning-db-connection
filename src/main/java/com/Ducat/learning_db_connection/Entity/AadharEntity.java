@@ -12,10 +12,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "aadhar_tb")
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class AadharEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,5 +21,12 @@ public class AadharEntity {
     @NotEmpty
     private String completeName;
     @NotNull
-    private UUID aadharId;
+    private Integer aadharId;
+
+    public static AadharEntity getAadharEntity(String completeName,Integer aadharId){
+         AadharEntity aadharEntity=new AadharEntity();
+         aadharEntity.setAadharId(aadharId);
+         aadharEntity.setCompleteName(completeName);
+         return aadharEntity;
+    }
 }
