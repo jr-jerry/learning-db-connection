@@ -1,22 +1,14 @@
 package com.Ducat.learning_db_connection.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
-/**
- * @Entity annotation-->I want to represnt this class in table representation
- */
+
 @Entity
 @Getter 
 @Setter 
 public class UserEntity {
-    /**
-     * @Id primary key 
-     */
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -29,6 +21,9 @@ public class UserEntity {
 
     private String add;
     private Boolean isDeleted;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id",name = "aadhar_id")
+    private AadharEntity aadharEntity;
 
 }
 // select * from table where userAge=? AND isDeleted=false;
