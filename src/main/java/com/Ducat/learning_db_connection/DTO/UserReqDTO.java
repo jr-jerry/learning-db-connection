@@ -1,5 +1,6 @@
 package com.Ducat.learning_db_connection.DTO;
 
+ import com.Ducat.learning_db_connection.Entity.AadharEntity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,4 +26,7 @@ public class UserReqDTO {
     @NotNull(message = "age cann't be empty")
     @Min(value = 10,message = "age should be above 10 ")
     private Long userAge;
+
+    private String add;
+    private AadharEntity aadharEntity;
 }

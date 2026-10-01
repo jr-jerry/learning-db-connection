@@ -21,7 +21,7 @@ public class UserEntity {
 
     private String add;
     private Boolean isDeleted;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id",name = "aadhar_id")
     private AadharEntity aadharEntity;
 

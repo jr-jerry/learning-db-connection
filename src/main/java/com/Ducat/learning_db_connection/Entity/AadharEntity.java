@@ -14,6 +14,8 @@ import java.util.UUID;
 @Table(name = "aadhar_tb")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AadharEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

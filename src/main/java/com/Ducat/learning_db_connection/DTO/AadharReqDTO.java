@@ -1,5 +1,6 @@
 package com.Ducat.learning_db_connection.DTO;
 
+import com.Ducat.learning_db_connection.Entity.AadharEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,4 +20,5 @@ public class AadharReqDTO {
     private String completeName;
     @NotNull
     private Integer aadharId;
+
 }

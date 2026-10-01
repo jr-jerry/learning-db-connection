@@ -2,6 +2,7 @@ package com.Ducat.learning_db_connection.Services;
 
 import com.Ducat.learning_db_connection.DTO.UserReqDTO;
 import com.Ducat.learning_db_connection.DTO.UserResDTO;
+import com.Ducat.learning_db_connection.Entity.AadharEntity;
 import com.Ducat.learning_db_connection.Entity.UserEntity;
 import com.Ducat.learning_db_connection.Exception.InValidAgeException;
 import com.Ducat.learning_db_connection.Repository.UserRepo;
@@ -38,6 +39,11 @@ public class UserServiceImp implements  UserService {
         }
         userEntity.setUserAge( userReqDTO.getUserAge());
         userEntity.setUserName(userReqDTO.getUserName());
+        userEntity.setAdd(userReqDTO.getAdd());
+
+        AadharEntity aadharEntity=AadharEntity.getAadharEntity(userReqDTO.getAadharEntity().getCompleteName(),
+                                                                 userReqDTO.getAadharEntity().getAadharId());
+        userEntity.setAadharEntity(aadharEntity);
         userEntity.setIsDeleted(false);
      
 
