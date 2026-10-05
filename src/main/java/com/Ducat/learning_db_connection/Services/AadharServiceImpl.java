@@ -29,4 +29,15 @@ public class AadharServiceImpl implements AadharService {
         aadharEntity.setAadharId(aadharReqDTO.getAadharId());
         return aadharRepo.save(aadharEntity);
     }
+
+    @Override
+    public AadharEntity findByName(String aadharCompleteName) {
+         AadharEntity aadharEntity=
+                 aadharRepo.findByCompleteName(aadharCompleteName)
+                           .orElseThrow(
+                                   ()->new RuntimeException("No Aadhar found with this name ")
+                           );
+         aadharEntity.getUserEntity();
+         return aadharEntity;
+    }
 }

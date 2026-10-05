@@ -25,6 +25,9 @@ public class AadharEntity {
     @NotNull
     private Integer aadharId;
 
+    @OneToOne( mappedBy = "aadharEntity")
+    private UserEntity userEntity;
+
     public static AadharEntity getAadharEntity(String completeName,Integer aadharId){
          AadharEntity aadharEntity=new AadharEntity();
          aadharEntity.setAadharId(aadharId);
