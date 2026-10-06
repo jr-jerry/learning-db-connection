@@ -1,10 +1,13 @@
 package com.Ducat.learning_db_connection.Entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 /**
@@ -14,9 +17,6 @@ import lombok.*;
 @Getter 
 @Setter 
 public class UserEntity {
-    /**
-     * @Id primary key 
-     */
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -29,6 +29,10 @@ public class UserEntity {
 
     private String add;
     private Boolean isDeleted;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "trainer_id",referencedColumnName = "id")
+    private TrainerEntity trainerEntity;
 
 }
 // select * from table where userAge=? AND isDeleted=false;
