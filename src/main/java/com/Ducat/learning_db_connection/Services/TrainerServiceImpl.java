@@ -17,4 +17,9 @@ public class TrainerServiceImpl implements  TrainerService{
     public TrainerEntity save(TrainerEntity trainerEntity) {
         return trainerRepo.save(trainerEntity);
     }
+
+    @Override
+    public TrainerEntity findByName(String name) {
+        return trainerRepo.findByName(name).orElseThrow(()->new RuntimeException("No Trainer Exist with this name"));
+    }
 }

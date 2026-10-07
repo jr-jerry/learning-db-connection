@@ -14,11 +14,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImp implements  UserService {
-    private final UserRepo userRepo;
-
-    public UserServiceImp(UserRepo userRepo){
-        this.userRepo=userRepo;
+    public UserServiceImp(UserRepo userRepo, TrainerService trainerService) {
+        this.userRepo = userRepo;
+        this.trainerService = trainerService;
     }
+
+    private final UserRepo userRepo;
+    private final TrainerService trainerService;
+
+
     @Override 
     public void deleteUser(Long userId){
         Optional<UserEntity> boxOptional=userRepo.findById(userId);
@@ -40,10 +44,16 @@ public class UserServiceImp implements  UserService {
         userEntity.setUserAge( userReqDTO.getUserAge());
         userEntity.setUserName(userReqDTO.getUserName());
         userEntity.setIsDeleted(false);
+        TrainerEntity trainerEntity;
+        try{
+             trainerEntity=trainerService.findByName(userReqDTO.getTrainerEntity().getName());
+        }catch(RuntimeException e){
+            trainerEntity=new TrainerEntity();
+            trainerEntity.setName(userReqDTO.getTrainerEntity().getName());
+            trainerEntity.setTechnology(userReqDTO.getTrainerEntity().getTechnology());
+        }
 
-        TrainerEntity trainerEntity=new TrainerEntity();
-        trainerEntity.setName(userReqDTO.getTrainerEntity().getName());
-        trainerEntity.setTechnology(userReqDTO.getTrainerEntity().getTechnology());
+
 
         userEntity.setTrainerEntity(trainerEntity);
      
@@ -53,6 +63,7 @@ public class UserServiceImp implements  UserService {
       return  UserResDTO.builder()
                 .userAge(savedUserEntity.getUserAge())
                 .userName(savedUserEntity.getUserName())
+              .trainerEntity(savedUserEntity.getTrainerEntity())
                 .build();
     }
 
@@ -84,6 +95,7 @@ public class UserServiceImp implements  UserService {
                  UserResDTO userResDTO=UserResDTO.builder()
                                             .userName(user.getUserName())
                                             .userAge(user.getUserAge())
+                         .trainerEntity(user.getTrainerEntity())
                                             .build();
                 emptyDtoList.add(userResDTO);
             }

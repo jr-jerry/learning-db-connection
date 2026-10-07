@@ -4,4 +4,5 @@ import com.Ducat.learning_db_connection.Entity.TrainerEntity;
 
 public interface TrainerService {
     TrainerEntity save(TrainerEntity trainerEntity);
+    TrainerEntity findByName(String name);
 }
