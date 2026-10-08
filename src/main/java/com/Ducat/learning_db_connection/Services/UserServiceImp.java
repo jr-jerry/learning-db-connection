@@ -34,38 +34,38 @@ public class UserServiceImp implements  UserService {
  
         userRepo.save(oldEntity); 
     }
-    @Override
-    public UserResDTO saveUserEntity(UserReqDTO userReqDTO) {
-
-        UserEntity userEntity=new UserEntity();
-        if(userReqDTO.getUserAge()<0){
-            throw new InValidAgeException("invalid age hai ");
-        }
-        userEntity.setUserAge( userReqDTO.getUserAge());
-        userEntity.setUserName(userReqDTO.getUserName());
-        userEntity.setIsDeleted(false);
-        TrainerEntity trainerEntity;
-        try{
-             trainerEntity=trainerService.findByName(userReqDTO.getTrainerEntity().getName());
-        }catch(RuntimeException e){
-            trainerEntity=new TrainerEntity();
-            trainerEntity.setName(userReqDTO.getTrainerEntity().getName());
-            trainerEntity.setTechnology(userReqDTO.getTrainerEntity().getTechnology());
-        }
-
-
-
-        userEntity.setTrainerEntity(trainerEntity);
-     
-
-       UserEntity savedUserEntity= userRepo.save(userEntity);
-
-      return  UserResDTO.builder()
-                .userAge(savedUserEntity.getUserAge())
-                .userName(savedUserEntity.getUserName())
-              .trainerEntity(savedUserEntity.getTrainerEntity())
-                .build();
-    }
+//    @Override
+//    public UserResDTO saveUserEntity(UserReqDTO userReqDTO) {
+//
+//        UserEntity userEntity=new UserEntity();
+//        if(userReqDTO.getUserAge()<0){
+//            throw new InValidAgeException("invalid age hai ");
+//        }
+//        userEntity.setUserAge( userReqDTO.getUserAge());
+//        userEntity.setUserName(userReqDTO.getUserName());
+//        userEntity.setIsDeleted(false);
+//        TrainerEntity trainerEntity;
+//        try{
+//             trainerEntity=trainerService.findByName(userReqDTO.getTrainerEntity().getName());
+//        }catch(RuntimeException e){
+//            trainerEntity=new TrainerEntity();
+//            trainerEntity.setName(userReqDTO.getTrainerEntity().getName());
+//            trainerEntity.setTechnology(userReqDTO.getTrainerEntity().getTechnology());
+//        }
+//
+//
+//
+//        userEntity.setTrainerEntity(trainerEntity);
+//
+//
+//       UserEntity savedUserEntity= userRepo.save(userEntity);
+//
+//      return  UserResDTO.builder()
+//                .userAge(savedUserEntity.getUserAge())
+//                .userName(savedUserEntity.getUserName())
+//              .trainerEntity(savedUserEntity.getTrainerEntity())
+//                .build();
+//    }
 
     @Override
     public UserEntity updateUser(UserReqDTO userReqDTO) {
@@ -86,20 +86,20 @@ public class UserServiceImp implements  UserService {
         return updatedEntity;       
     }
 
-    public List<UserResDTO> getAllUser(){
-        List<UserResDTO> emptyDtoList=new ArrayList<>();
-        List<UserEntity> savedUserList=userRepo.findAll();
-
-        for(UserEntity user:savedUserList){
-            if(user.getIsDeleted()==false){
-                 UserResDTO userResDTO=UserResDTO.builder()
-                                            .userName(user.getUserName())
-                                            .userAge(user.getUserAge())
-                         .trainerEntity(user.getTrainerEntity())
-                                            .build();
-                emptyDtoList.add(userResDTO);
-            }
-        }
-        return emptyDtoList;
-    }
+//    public List<UserResDTO> getAllUser(){
+//        List<UserResDTO> emptyDtoList=new ArrayList<>();
+//        List<UserEntity> savedUserList=userRepo.findAll();
+//
+//        for(UserEntity user:savedUserList){
+//            if(user.getIsDeleted()==false){
+//                 UserResDTO userResDTO=UserResDTO.builder()
+//                                            .userName(user.getUserName())
+//                                            .userAge(user.getUserAge())
+//                         .trainerEntity(user.getTrainerEntity())
+//                                            .build();
+//                emptyDtoList.add(userResDTO);
+//            }
+//        }
+//        return emptyDtoList;
+//    }
 }

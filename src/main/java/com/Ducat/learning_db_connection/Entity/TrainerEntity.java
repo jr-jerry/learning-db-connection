@@ -1,25 +1,28 @@
 package com.Ducat.learning_db_connection.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity 
 @Table (name="trainer_tb")
 @Getter 
 @Setter 
 @AllArgsConstructor 
-@NoArgsConstructor 
+@NoArgsConstructor
+@JsonIgnoreProperties(value = {"id"},ignoreUnknown = true)
 public class TrainerEntity {
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @JsonIgnoreProperties
     private Long id;
     private String name;
     private String technology;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "trainer")
+    private List<UserEntity> userEntityList;
 }

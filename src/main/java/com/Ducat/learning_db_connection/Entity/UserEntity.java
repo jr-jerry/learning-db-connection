@@ -1,5 +1,7 @@
 package com.Ducat.learning_db_connection.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +17,8 @@ import lombok.*;
  */
 @Entity
 @Getter 
-@Setter 
+@Setter
+@JsonIgnoreProperties(value = {"userId"},ignoreUnknown = true)
 public class UserEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -26,19 +29,10 @@ public class UserEntity {
     )
     private String userName;
     private Long userAge;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trainer_id",referencedColumnName = "id")
+    @JsonIgnore
+    private TrainerEntity trainer;
     private String add;
     private Boolean isDeleted;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name = "trainer_id",referencedColumnName = "id")
-    private TrainerEntity trainerEntity;
-
 }
-// select * from table where userAge=? AND isDeleted=false;
-// findById(id) ;
-//findByUserName(name);
-//findByUserAge(age);
-//findByUserAgeAndUserName(age,name);
-// isDeleted false , userAge>20
-// findByUserAgeGreaterThanAndIsDeletedFalse(age);

@@ -8,9 +8,9 @@ import com.Ducat.learning_db_connection.Entity.UserEntity;
 
 public interface UserService {
 
-    UserResDTO saveUserEntity(UserReqDTO userReqDTO);
+//    UserResDTO saveUserEntity(UserReqDTO userReqDTO);
 
-    List<UserResDTO> getAllUser();
+//    List<UserResDTO> getAllUser();
 
     UserEntity updateUser(UserReqDTO userReqDTO);
 

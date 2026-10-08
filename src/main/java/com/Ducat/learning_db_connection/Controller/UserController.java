@@ -43,16 +43,16 @@ public class UserController {
        return ResponseEntity.accepted().body(updatedUserEntity);
     }
 
-    @PostMapping("/signUp")
-    public ResponseEntity<?> signUpEndpoint(@Valid  @RequestBody  UserReqDTO userReqDTO){
-        System.out.println("Data Receive in controller layer "+userReqDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserEntity(userReqDTO));
-    }
+//    @PostMapping("/signUp")
+//    public ResponseEntity<?> signUpEndpoint(@Valid  @RequestBody  UserReqDTO userReqDTO){
+//        System.out.println("Data Receive in controller layer "+userReqDTO);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUserEntity(userReqDTO));
+//    }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<UserResDTO>> getMethodName() {
-        List<UserResDTO> emptyDtoList= userService.getAllUser();
-        
-        return ResponseEntity.ok(emptyDtoList);
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<UserResDTO>> getMethodName() {
+//        List<UserResDTO> emptyDtoList= userService.getAllUser();
+//
+//        return ResponseEntity.ok(emptyDtoList);
+//    }
 }
